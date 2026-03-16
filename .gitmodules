@@ -1,0 +1,3 @@
+[submodule "agentic-cinematography"]
+	path = agentic-cinematography
+	url = git@github.com:AtaAtasoy/agentic-cinematography.git
