@@ -19,7 +19,7 @@ import click
 import hydra
 
 from vipe import get_config_path, make_pipeline
-from vipe.streams.base import ProcessedVideoStream
+from vipe.streams.base import ProcessedVideoStream, ResizeProcessor
 from vipe.streams.raw_mp4_stream import RawMp4Stream
 from vipe.streams.frame_dir_stream import FrameDirStream
 from vipe.utils.logging import configure_logging
@@ -42,7 +42,14 @@ from vipe.utils.viser import run_viser
 )
 @click.option("--pipeline", "-p", default="default", help="Pipeline configuration to use (default: 'default')")
 @click.option("--visualize", "-v", is_flag=True, help="Enable visualization of intermediate results")
-def infer(video: Path, image_dir: Path, output: Path, pipeline: str, visualize: bool):
+@click.option(
+    "--downsample",
+    "-r",
+    type=int,
+    default=1,
+    help="Downsample factor for input resolution (e.g., 2 = half, 4 = quarter). Default: 1 (no downsampling)",
+)
+def infer(video: Path, image_dir: Path, output: Path, pipeline: str, visualize: bool, downsample: int):
     """Run inference on a video file or directory of images."""
 
     logger = configure_logging()
@@ -87,6 +94,14 @@ def infer(video: Path, image_dir: Path, output: Path, pipeline: str, visualize: 
     else:
         # Some input videos can be malformed, so we need to cache the videos to obtain correct number of frames.
         video_stream = ProcessedVideoStream(RawMp4Stream(video), []).cache(desc="Reading video stream")
+
+    if downsample > 1:
+        h, w = video_stream.frame_size()
+        new_h, new_w = h // downsample, w // downsample
+        logger.info(f"Downsampling {downsample}x: {h}x{w} -> {new_h}x{new_w}")
+        video_stream = ProcessedVideoStream(video_stream, [ResizeProcessor((new_h, new_w))]).cache(
+            desc="Resizing frames"
+        )
 
     vipe_pipeline.run(video_stream)
     logger.info("Finished")
