@@ -451,6 +451,19 @@ class AssignAttributesProcessor(StreamProcessor):
         return frame
 
 
+class ResizeProcessor(StreamProcessor):
+    """Resizes each frame to a target resolution (height, width), preserving aspect ratio."""
+
+    def __init__(self, target_size: tuple[int, int]):
+        self.target_size = target_size
+
+    def update_frame_size(self, previous_frame_size: tuple[int, int]):
+        return self.target_size
+
+    def __call__(self, frame_idx: int, frame: VideoFrame) -> VideoFrame:
+        return frame.resize(self.target_size)
+
+
 class ProcessedVideoStream(VideoStream):
     """
     A video stream from a raw video stream, with processing applied.

@@ -1,12 +1,13 @@
 name: vipe
 channels:
-  - nvidia/label/cuda-12.8.0
+  - nvidia/label/cuda-12.6.0
   - conda-forge
   - nodefaults
 dependencies:
   - python=3.10
   - pip
   - cuda-nvcc
+  - cuda-toolkit
   - eigen
   - zlib
   - libcusparse-dev

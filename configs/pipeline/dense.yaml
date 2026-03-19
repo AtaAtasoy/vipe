@@ -1,5 +1,5 @@
 defaults:
-  - /slam: default
+  - /slam: dense
 
 instance: vipe.pipeline.default.DefaultAnnotationPipeline
 
@@ -9,7 +9,7 @@ init:
   intrinsics: "geocalib"
   instance:
     kf_gap_sec: 2.0
-    phrases: 
+    phrases:
       - person
       - animal
       - vehicle
@@ -31,17 +31,10 @@ post:
 
 # Output configs
 output:
-  # Path to save results
-  path: vipe_results/
+  path: vipe_results_dense/
   skip_exists: false
-
-  # Save artifacts and a info file
   save_artifacts: true
-
-  # Save reconstruction from SLAM
-  save_slam_map: false
-
-  # Visualization videos to BASE_PATH/vipe/xxx.mp4
+  save_slam_map: true
   save_viz: true
-  viz_downsample: 1
+  viz_downsample: 2
   viz_attributes: [['rgb', 'instance'], ['depth', 'pcd']]

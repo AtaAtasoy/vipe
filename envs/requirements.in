@@ -1,4 +1,4 @@
-torch==2.7.0+cu128
+torch==2.7.0+cu126
 torchvision
 
 click

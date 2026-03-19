@@ -165,8 +165,13 @@ class AdaptiveDepthProcessor(StreamProcessor):
 
         try:
             prefix, metric_model, video_model = model.split("_")
-            assert video_model in ["svda", "vda"]
-            self.video_depth_model = VideoDepthAnythingDepthModel(model="vits" if video_model == "svda" else "vitl")
+            assert video_model in ["svda", "vda", "dvd"]
+            if video_model == "dvd":
+                from vipe.priors.depth.dvd import DVDDepthModel
+
+                self.video_depth_model = DVDDepthModel()
+            else:
+                self.video_depth_model = VideoDepthAnythingDepthModel(model="vits" if video_model == "svda" else "vitl")
 
         except ValueError:
             prefix, metric_model = model.split("_")

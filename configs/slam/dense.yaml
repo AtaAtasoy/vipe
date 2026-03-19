@@ -1,0 +1,35 @@
+buffer: 1024
+beta: 0.3
+# Lower threshold = more keyframes (default: 2.4)
+filter_thresh: 0.8
+warmup: 8
+keyframe_thresh: 4.0
+frontend_thresh: 16.0
+frontend_window: 25
+frontend_radius: 2
+frontend_nms: 1
+seq_init: true
+frontend_backend_iters: [16, 64, 256]
+backend_thresh: 22.0
+backend_radius: 2
+backend_nms: 3
+backend_iters: 24
+init_disp: 1.0
+optimize_intrinsics: ???
+optimize_rig_rotation: false
+cross_view: true
+cross_view_idx: null
+adaptive_cross_view: false
+infill_chunk_size: 16
+# Enable dense disparity infilling for non-keyframes
+infill_dense_disp: False
+# More lenient depth filtering = more points (default: 0.05)
+map_filter_thresh: 0.10
+visualize: false
+keyframe_depth: metric3d-small
+
+ba:
+  dense_disp_alpha: 0.001
+
+sparse_tracks:
+  name: dummy

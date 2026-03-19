@@ -42,5 +42,10 @@ def make_depth_model(model: str):
 
         return DepthAnything3Model()
 
+    elif model_name == "dvd":
+        from .dvd import DVDDepthModel
+
+        return DVDDepthModel()
+
     else:
         raise ValueError(f"Unknown depth model: {model}")
