@@ -1,3 +1,6 @@
 [submodule "agentic-cinematography"]
 	path = agentic-cinematography
 	url = git@github.com:AtaAtasoy/agentic-cinematography.git
+[submodule "DVD"]
+	path = DVD
+	url = git@github.com:EnVision-Research/DVD.git
